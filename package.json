@@ -1,0 +1,100 @@
+{
+  "name": "speech",
+  "displayName": "VSCode Speech",
+  "description": "Text to speech",
+  "version": "0.0.1",
+  "publisher": "mattbierner",
+  "license": "MIT",
+  "keywords": [
+    "speech",
+    "say",
+    "text to speech",
+    "text-to-speech"
+  ],
+  "icon": "media/logo.svg",
+  "galleryBanner": {
+    "color": "#ffff66",
+    "theme": "light"
+  },
+  "engines": {
+    "vscode": "^1.5.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattbierner/vscode-speech.git"
+  },
+  "activationEvents": [
+    "onCommand:speech.speakSelection"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "Speech configuration",
+      "properties": {
+        "speech.voice": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Name of voice used to speak text."
+        },
+        "speech.speed": {
+          "type": "number",
+          "default": 1.0,
+          "description": "Speech rate speed multiplier."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "speech.speakDocument",
+        "title": "Speak Document",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "speech.speakSelection",
+        "title": "Speak Selection",
+        "when": "editorTextFocus && editorHasSelection"
+      },
+      {
+        "command": "speech.stopSpeaking",
+        "title": "Stop Speaking"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "speech.speakDocument",
+          "when": "!editorHasSelection",
+          "group": "8_speech"
+        },
+        {
+          "command": "speech.speakSelection",
+          "when": "editorHasSelection",
+          "group": "8_speech"
+        },
+        {
+          "command": "speech.stopSpeaking",
+          "group": "8_speech"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "typescript": "^1.8.5",
+    "vscode": "^0.11.0"
+  },
+  "dependencies": {
+    "say": "^0.10.0"
+  }
+}
