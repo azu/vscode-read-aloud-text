@@ -102,6 +102,21 @@ Zosia               pl_PL    # Witaj. Mam na imię Zosia, jestem głosem kobiecy
 Zuzana              cs_CZ    # Dobrý den, jmenuji se Zuzana. Jsem český hlas.
 ```
 
+On Windows, from a command prompt run:
+
+```bat
+powershell "Add-Type -AssemblyName System.speech;" ^
+    "$speak = New-Object System.Speech.Synthesis.SpeechSynthesizer;" ^
+    "$speak.GetInstalledVoices()" ^
+    "| foreach  { $_.VoiceInfo.Name }"
+```
+
+Example output:
+
+```
+Microsoft David Desktop
+Microsoft Zira Desktop
+```
 
 #### `speech.speed`
 Speed multiplier for the voice. Defaults to the operating system's default rate.
