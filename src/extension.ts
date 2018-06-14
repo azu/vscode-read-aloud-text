@@ -1,4 +1,3 @@
-'use strict';
 import * as vscode from 'vscode';
 import * as say from 'say';
 
@@ -34,28 +33,21 @@ const speakDocument = (editor: vscode.TextEditor) => {
 
 
 export function activate(context: vscode.ExtensionContext) {
-    const speakDocumentCommand = vscode.commands.registerTextEditorCommand('speech.speakDocument', (editor) => {
+    context.subscriptions.push(vscode.commands.registerTextEditorCommand('speech.speakDocument', (editor) => {
         stopSpeaking();
         if (!editor)
             return;
         speakDocument(editor);
-    });
+    }));
 
-    const speakSelectionCommand = vscode.commands.registerTextEditorCommand('speech.speakSelection', (editor) => {
+    context.subscriptions.push(vscode.commands.registerTextEditorCommand('speech.speakSelection', (editor) => {
         stopSpeaking();
         if (!editor)
             return;
         speakCurrentSelection(editor);
-    });
+    }));
 
-    const stopSpeakingCommand = vscode.commands.registerCommand('speech.stopSpeaking', () => {
+    context.subscriptions.push(vscode.commands.registerCommand('speech.stopSpeaking', () => {
         stopSpeaking();
-    });
-
-    context.subscriptions.push(speakDocumentCommand);
-    context.subscriptions.push(speakSelectionCommand);
-    context.subscriptions.push(stopSpeakingCommand);
-}
-
-export function deactivate() {
+    }));
 }
