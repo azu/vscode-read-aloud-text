@@ -2,3 +2,5 @@ out
 node_modules
 example
 *.vsix
+
+.DS_Store
