@@ -2,7 +2,7 @@
   "name": "speech",
   "displayName": "VSCode Speech",
   "description": "Text to speech",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "mattbierner",
   "license": "MIT",
   "keywords": [
