@@ -1,20 +1,11 @@
-import * as vscode from 'vscode';
-import { SpeechEngine, SpeechEnginePosition } from './SpeechEngine';
-const getVoice = (): string =>
-    vscode.workspace.getConfiguration('read-aloud-text').get<string>('voice');
+import * as vscode from "vscode";
+import { SpeechEngine, SpeechEnginePosition } from "./SpeechEngine";
+const getVoice = (): string => vscode.workspace.getConfiguration("read-aloud-text").get<string>("voice");
 
-const getSpeed = (): number =>
-    vscode.workspace.getConfiguration('read-aloud-text').get<number>('speed');
+const getSpeed = (): number => vscode.workspace.getConfiguration("read-aloud-text").get<number>("speed");
 
 let highlightDecorator: vscode.TextEditorDecorationType | null = null;
-function highlightRange({
-    startIndex,
-    endIndex
-}: {
-        startIndex: number;
-        endIndex: number;
-    }) {
-
+function highlightRange({ startIndex, endIndex }: { startIndex: number; endIndex: number }) {
     const activeEditor = vscode.window.activeTextEditor;
     if (!activeEditor) {
         return;
@@ -29,18 +20,18 @@ function highlightRange({
         highlightDecorator.dispose();
     }
     highlightDecorator = vscode.window.createTextEditorDecorationType({
-        borderWidth: '1px',
-        borderStyle: 'solid',
-        overviewRulerColor: 'blue',
+        borderWidth: "1px",
+        borderStyle: "solid",
+        overviewRulerColor: "blue",
         overviewRulerLane: vscode.OverviewRulerLane.Right,
         backgroundColor: "yellow",
         light: {
             // this color will be used in light color themes
-            borderColor: 'darkblue'
+            borderColor: "darkblue"
         },
         dark: {
             // this color will be used in dark color themes
-            borderColor: 'lightblue'
+            borderColor: "lightblue"
         }
     });
     activeEditor.setDecorations(highlightDecorator, [decoration]);
@@ -49,13 +40,17 @@ function highlightRange({
 
 let currentEngine: SpeechEngine | null = null;
 const speech = {
-    start(text: string, fileName: string, loc?: {
-        start: SpeechEnginePosition,
-        end: SpeechEnginePosition
-    }) {
+    start(
+        text: string,
+        fileName: string,
+        loc?: {
+            start: SpeechEnginePosition;
+            end: SpeechEnginePosition;
+        }
+    ) {
         this.stop();
         currentEngine = new SpeechEngine(text, fileName, loc);
-        currentEngine.onChange((currentNode) => {
+        currentEngine.onChange(currentNode => {
             console.log("curretNode", currentNode);
             highlightRange({
                 startIndex: currentNode.range[0],
@@ -75,8 +70,7 @@ const speech = {
 };
 const speakCurrentSelection = (editor: vscode.TextEditor) => {
     const selection = editor.selection;
-    if (!selection)
-        return;
+    if (!selection) return;
 
     const startPos = editor.selection.start;
     const endPos = editor.selection.end;
@@ -96,24 +90,27 @@ const speakDocument = (editor: vscode.TextEditor) => {
     speech.start(editor.document.getText(), editor.document.fileName);
 };
 
-
 export function activate(context: vscode.ExtensionContext) {
-    context.subscriptions.push(vscode.commands.registerTextEditorCommand('read-aloud-text.speakDocument', (editor) => {
-        console.log("read-aloud-text.speakDocument");
-        speech.stop();
-        if (!editor)
-            return;
-        speakDocument(editor);
-    }));
-    context.subscriptions.push(vscode.commands.registerTextEditorCommand('read-aloud-text.speakSelection', (editor) => {
-        console.log("read-aloud-text.speakSelection");
-        speech.stop();
-        if (!editor)
-            return;
-        speakCurrentSelection(editor);
-    }));
+    context.subscriptions.push(
+        vscode.commands.registerTextEditorCommand("read-aloud-text.speakDocument", editor => {
+            console.log("read-aloud-text.speakDocument");
+            speech.stop();
+            if (!editor) return;
+            speakDocument(editor);
+        })
+    );
+    context.subscriptions.push(
+        vscode.commands.registerTextEditorCommand("read-aloud-text.speakSelection", editor => {
+            console.log("read-aloud-text.speakSelection");
+            speech.stop();
+            if (!editor) return;
+            speakCurrentSelection(editor);
+        })
+    );
 
-    context.subscriptions.push(vscode.commands.registerCommand('read-aloud-text.stopSpeaking', () => {
-        speech.stop();
-    }));
+    context.subscriptions.push(
+        vscode.commands.registerCommand("read-aloud-text.stopSpeaking", () => {
+            speech.stop();
+        })
+    );
 }

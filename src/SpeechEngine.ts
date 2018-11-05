@@ -1,32 +1,36 @@
-import * as say from 'say';
+import * as say from "say";
 import { TxtNode, TxtParentNode, ASTNodeTypes } from "@textlint/ast-node-types";
-import { createParser } from './parser';
+import { createParser } from "./parser";
 import { traverse, VisitorOption } from "@textlint/ast-traverse";
-import { splitAST, Syntax as SentenceSyntax } from "sentence-splitter"
+import { splitAST, Syntax as SentenceSyntax } from "sentence-splitter";
 const StringSource = require("textlint-util-to-string");
-import PQueue = require('p-queue');
-import { EventEmitter } from 'events';
+import PQueue = require("p-queue");
+import { EventEmitter } from "events";
 
 import StructuredSource = require("structured-source");
 /**
  *  Line number starts with 1.
  *  Column number starts with 0.
  */
-export type SpeechEnginePosition = { line: number, column: number }
+export type SpeechEnginePosition = { line: number; column: number };
 export class SpeechEngine extends EventEmitter {
     private txtAST: TxtNode;
     private txtNodes: TxtNode[];
     private speechIndex: number;
     private promiseQueue: PQueue<PQueue.DefaultAddOptions>;
-    constructor(private text: string, filePath: string, loc?: {
-        start: SpeechEnginePosition,
-        end: SpeechEnginePosition
-    }) {
+    constructor(
+        private text: string,
+        filePath: string,
+        loc?: {
+            start: SpeechEnginePosition;
+            end: SpeechEnginePosition;
+        }
+    ) {
         super();
         const structuredSource = new StructuredSource(text);
         const positionToIndex = (position: { line: number; column: number }): number => {
             return structuredSource.positionToIndex(position);
-        }
+        };
         const startIndex = loc ? positionToIndex(loc.start) : null;
         const endIndex = loc ? positionToIndex(loc.end) : null;
         const parser = createParser([
@@ -56,7 +60,7 @@ export class SpeechEngine extends EventEmitter {
             //                         |------------------| <- C
             //        |//////////////////////////|  <- Selection
             //        ^                          ^
-            //     startIndex                 endIndex     
+            //     startIndex                 endIndex
             // Pattern D
             //  |-------|
             //    |///|
@@ -79,7 +83,7 @@ export class SpeechEngine extends EventEmitter {
                 return true;
             }
             return false;
-        }
+        };
         traverse(this.txtAST as TxtParentNode, {
             enter(node) {
                 if (!isIncludedNode(node)) {
@@ -132,12 +136,14 @@ export class SpeechEngine extends EventEmitter {
             const text: string = node.children ? new StringSource(node).toString() : node.raw;
             this.promiseQueue.add(() => {
                 this.emit("CHANGE", this.speechIndex);
-                return speakText(text, voice, speed).then(() => {
-                    // update index after finishing speech
-                    this.speechIndex++;
-                }).catch(error => {
-                    this.speechIndex++;
-                })
+                return speakText(text, voice, speed)
+                    .then(() => {
+                        // update index after finishing speech
+                        this.speechIndex++;
+                    })
+                    .catch(error => {
+                        this.speechIndex++;
+                    });
             });
         });
     }
@@ -156,7 +162,7 @@ export class SpeechEngine extends EventEmitter {
 
 const stopSpeaking = () => {
     say.stop();
-}
+};
 
 const speakText = (text: string, voice: string, speed: number): Promise<void> => {
     text = text.trim();
