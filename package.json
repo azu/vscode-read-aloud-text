@@ -28,7 +28,9 @@
     "url": "https://github.com/azu/vscode-read-aloud-text.git"
   },
   "activationEvents": [
-    "onCommand:read-aloud-text.speakSelection"
+    "onCommand:read-aloud-text.speakDocument",
+    "onCommand:read-aloud-text.speakSelection",
+    "onCommand:read-aloud-text.stopSpeaking"
   ],
   "main": "./out/extension",
   "contributes": {
