@@ -2,7 +2,7 @@
   "name": "read-aloud-text",
   "displayName": "Read Aloud text",
   "description": "Text to speech and highlight texts",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "publisher": "azu",
   "license": "MIT",
   "keywords": [
