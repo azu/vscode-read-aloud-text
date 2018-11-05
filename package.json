@@ -2,7 +2,7 @@
   "name": "read-aloud-text",
   "displayName": "VSCode Read Aloud text",
   "description": "Text to speech and highlight texts",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "azu",
   "license": "MIT",
   "keywords": [
