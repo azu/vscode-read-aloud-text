@@ -72,16 +72,16 @@
         {
           "command": "read-aloud-text.speakDocument",
           "when": "!editorHasSelection",
-          "group": "8_speech"
+          "group": "8_read-aloud-text"
         },
         {
           "command": "read-aloud-text.speakSelection",
           "when": "editorHasSelection",
-          "group": "8_speech"
+          "group": "8_read-aloud-text"
         },
         {
           "command": "read-aloud-text.stopSpeaking",
-          "group": "8_speech"
+          "group": "8_read-aloud-text"
         }
       ]
     }

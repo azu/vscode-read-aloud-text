@@ -115,14 +115,13 @@ export class SpeechEngine extends EventEmitter {
                 }
             }
         });
-        console.log("txtNodes", txtNodes);
         this.txtNodes = txtNodes;
         this.promiseQueue = new PQueue({ concurrency: 1 });
     }
 
     onChange(handler: (currentSpeechNode: TxtNode) => void) {
         this.on("CHANGE", (index: number) => {
-            console.log("change", index);
+            console.log("currentIndex", index);
             handler(this.txtNodes[index]);
         });
     }

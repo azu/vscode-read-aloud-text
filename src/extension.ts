@@ -56,7 +56,7 @@ const speech = {
         this.stop();
         currentEngine = new SpeechEngine(text, fileName, loc);
         currentEngine.onChange((currentNode) => {
-            console.log("curret", currentNode);
+            console.log("curretNode", currentNode);
             highlightRange({
                 startIndex: currentNode.range[0],
                 endIndex: currentNode.range[1]
@@ -99,13 +99,14 @@ const speakDocument = (editor: vscode.TextEditor) => {
 
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerTextEditorCommand('read-aloud-text.speakDocument', (editor) => {
+        console.log("read-aloud-text.speakDocument");
         speech.stop();
         if (!editor)
             return;
         speakDocument(editor);
     }));
-
     context.subscriptions.push(vscode.commands.registerTextEditorCommand('read-aloud-text.speakSelection', (editor) => {
+        console.log("read-aloud-text.speakSelection");
         speech.stop();
         if (!editor)
             return;
