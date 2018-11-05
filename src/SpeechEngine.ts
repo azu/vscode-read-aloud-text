@@ -94,20 +94,7 @@ export class SpeechEngine extends EventEmitter {
                 if (!isIncludedNode(node)) {
                     return;
                 }
-                const ignoreNodeTypes: string[] = [
-                    ASTNodeTypes.Document,
-                    ASTNodeTypes.Comment,
-                    ASTNodeTypes.Html,
-                    ASTNodeTypes.HtmlBlock,
-                    ASTNodeTypes.List, // ListItem is body
-                    ASTNodeTypes.Strong,
-                    ASTNodeTypes.Emphasis,
-                    ASTNodeTypes.BlockQuote,
-                    ASTNodeTypes.Header,
-                    ASTNodeTypes.HorizontalRule,
-                    ASTNodeTypes.CodeBlock
-                ];
-                if (node.type === ASTNodeTypes.Paragraph) {
+                if (node.type === ASTNodeTypes.Paragraph || node.type === "TableCell") {
                     const parentNode = splitAST(node as TxtParentNode);
                     parentNode.children.forEach(node => {
                         if (!isIncludedNode(node)) {
@@ -119,7 +106,7 @@ export class SpeechEngine extends EventEmitter {
                     });
                     return VisitorOption.Skip;
                 }
-                if (!ignoreNodeTypes.includes(node.type)) {
+                if (node.type === ASTNodeTypes.Str) {
                     txtNodes.push(node);
                 }
             }
