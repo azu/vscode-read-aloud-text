@@ -1,6 +1,6 @@
 {
   "name": "read-aloud-text",
-  "displayName": "VSCode Read Aloud text",
+  "displayName": "Read Aloud text",
   "description": "Text to speech and highlight texts",
   "version": "1.1.0",
   "publisher": "azu",
