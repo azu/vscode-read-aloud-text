@@ -2,6 +2,12 @@
 
 Simple text-to-speech extension for [Visual Studio Code](https://code.visualstudio.com).
 
+## Installation
+
+Please visit VSCode Marketplace.
+
+- [VSCode Read Aloud text - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=azu.read-aloud-text)
+
 ## About
 
 Read aloud text and highlight current text.
