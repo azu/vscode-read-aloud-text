@@ -29,7 +29,12 @@ It can either read the entire current document, or just the currently selected t
     - In other words, skip unreasonbale Node like `CodeBlock`
     - This extension only support `.txt`, Markdown, and Re:View to use a Parser
 - Highlight text that is read currently
-;
+- commands:
+    - `read-aloud-text.speakDocument`: speak document
+    - `read-aloud-text.speakHere`: speak here
+    - `read-aloud-text.speakSelection`: speak selection
+    - `read-aloud-text.stopSpeaking`: stop speaking
+
 ## Configuration
 By default, VSCode Speech uses whatever voice settings you have configured for your operating system. You can change the voice used to read text by [using some VSCode settings](https://code.visualstudio.com/docs/customization/userandworkspace)
 
