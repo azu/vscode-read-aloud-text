@@ -21,7 +21,7 @@ It can either read the entire current document, or just the currently selected t
 - Read aloud text like Markdown
 - Only Read aloud context text
     - In other words, skip unreasonbale Node like `CodeBlock`
-    - This extension only support `.txt`, Markdown to use a Parser
+    - This extension only support `.txt`, Markdown, and Re:View to use a Parser
 - Highlight text that is read currently
 ;
 ## Configuration

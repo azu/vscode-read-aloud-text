@@ -31,8 +31,16 @@ export class SpeechEngine extends EventEmitter {
         const endIndex = loc ? positionToIndex(loc.end) : null;
         const parser = createParser([
             {
+                pluginId: "text",
+                plugin: require("@textlint/textlint-plugin-text")
+            },
+            {
                 pluginId: "markdown",
                 plugin: require("@textlint/textlint-plugin-markdown")
+            },
+            {
+                pluginId: "review",
+                plugin: require("textlint-plugin-review")
             }
         ]);
         this.speechIndex = 0;
