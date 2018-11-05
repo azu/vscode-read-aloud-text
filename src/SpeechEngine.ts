@@ -94,7 +94,7 @@ export class SpeechEngine extends EventEmitter {
                 if (!isIncludedNode(node)) {
                     return;
                 }
-                if (node.type === ASTNodeTypes.Paragraph || node.type === "TableCell") {
+                if (node.type === ASTNodeTypes.Paragraph || node.type === ASTNodeTypes.Header || node.type === "TableCell") {
                     const parentNode = splitAST(node as TxtParentNode);
                     parentNode.children.forEach(node => {
                         if (!isIncludedNode(node)) {
