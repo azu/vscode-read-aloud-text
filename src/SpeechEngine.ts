@@ -119,9 +119,9 @@ export class SpeechEngine extends EventEmitter {
     }
 
     start(voice: string, speed: number) {
-        this.txtNodes.slice(this.speechIndex).forEach((node, index) => {
-            const soruce = new StringSource(node);
-            const text: string = soruce.toString();
+        this.txtNodes.slice(this.speechIndex).forEach((node: TxtNode | TxtParentNode, index) => {
+            // StringSource can handle ParentNode
+            const text: string = node.children ? new StringSource(node).toString() : node.raw;
             this.promiseQueue.add(() => {
                 this.emit("CHANGE", this.speechIndex);
                 return speakText(text, voice, speed).then(() => {

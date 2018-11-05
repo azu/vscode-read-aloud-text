@@ -1,8 +1,13 @@
-# VSCode Speech
+# VSCode Read aloud text
 
 Simple text-to-speech extension for [Visual Studio Code](https://code.visualstudio.com).
 
 ## About
+
+Read aloud text and highlight current text.
+
+
+
 VSCode Speech adds basic text-to-speech functionality to the VSCode editor using your operating system's built-in text-to-speech facilities.
 
 ![Demo](media/right-click-example.png)
@@ -10,6 +15,7 @@ VSCode Speech adds basic text-to-speech functionality to the VSCode editor using
 It can either read the entire current document, or just the currently selected text.
 
 ![Demo](media/palette-example.png)
+
 
 
 ## Configuration

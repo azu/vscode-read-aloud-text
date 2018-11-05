@@ -1,13 +1,14 @@
 {
-  "name": "speech",
-  "displayName": "VSCode Speech",
-  "description": "Text to speech",
-  "version": "0.0.2",
-  "publisher": "bierner",
+  "name": "read-aloud-text",
+  "displayName": "VSCode Read Aloud text",
+  "description": "Text to speech and highlight texts",
+  "version": "1.0.0",
+  "publisher": "azu",
   "license": "MIT",
   "keywords": [
     "speech",
     "say",
+    "tts",
     "text to speech",
     "text-to-speech"
   ],
@@ -24,10 +25,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mattbierner/vscode-speech.git"
+    "url": "https://github.com/azu/vscode-read-aloud-text.git"
   },
   "activationEvents": [
-    "onCommand:speech.speakSelection"
+    "onCommand:read-aloud-text.speakSelection"
   ],
   "main": "./out/extension",
   "contributes": {
@@ -35,7 +36,7 @@
       "type": "object",
       "title": "Speech configuration",
       "properties": {
-        "speech.voice": {
+        "read-aloud-text.voice": {
           "type": [
             "string",
             "null"
@@ -43,7 +44,7 @@
           "default": null,
           "description": "Name of voice used to speak text."
         },
-        "speech.speed": {
+        "read-aloud-text.speed": {
           "type": "number",
           "default": 1,
           "description": "Speech rate speed multiplier."
@@ -52,34 +53,34 @@
     },
     "commands": [
       {
-        "command": "speech.speakDocument",
+        "command": "read-aloud-text.speakDocument",
         "title": "Speak Document",
         "when": "editorTextFocus"
       },
       {
-        "command": "speech.speakSelection",
+        "command": "read-aloud-text.speakSelection",
         "title": "Speak Selection",
         "when": "editorTextFocus && editorHasSelection"
       },
       {
-        "command": "speech.stopSpeaking",
+        "command": "read-aloud-text.stopSpeaking",
         "title": "Stop Speaking"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "speech.speakDocument",
+          "command": "read-aloud-text.speakDocument",
           "when": "!editorHasSelection",
           "group": "8_speech"
         },
         {
-          "command": "speech.speakSelection",
+          "command": "read-aloud-text.speakSelection",
           "when": "editorHasSelection",
           "group": "8_speech"
         },
         {
-          "command": "speech.stopSpeaking",
+          "command": "read-aloud-text.stopSpeaking",
           "group": "8_speech"
         }
       ]

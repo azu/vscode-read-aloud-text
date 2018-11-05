@@ -98,21 +98,21 @@ const speakDocument = (editor: vscode.TextEditor) => {
 
 
 export function activate(context: vscode.ExtensionContext) {
-    context.subscriptions.push(vscode.commands.registerTextEditorCommand('speech.speakDocument', (editor) => {
+    context.subscriptions.push(vscode.commands.registerTextEditorCommand('read-aloud-text.speakDocument', (editor) => {
         speech.stop();
         if (!editor)
             return;
         speakDocument(editor);
     }));
 
-    context.subscriptions.push(vscode.commands.registerTextEditorCommand('speech.speakSelection', (editor) => {
+    context.subscriptions.push(vscode.commands.registerTextEditorCommand('read-aloud-text.speakSelection', (editor) => {
         speech.stop();
         if (!editor)
             return;
         speakCurrentSelection(editor);
     }));
 
-    context.subscriptions.push(vscode.commands.registerCommand('speech.stopSpeaking', () => {
+    context.subscriptions.push(vscode.commands.registerCommand('read-aloud-text.stopSpeaking', () => {
         speech.stop();
     }));
 }
