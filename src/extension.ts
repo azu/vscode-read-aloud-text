@@ -52,6 +52,14 @@ const speech = {
         currentEngine = new SpeechEngine(text, fileName, loc);
         currentEngine.onChange(currentNode => {
             console.log("curretNode", currentNode);
+            const activeEditor = vscode.window.activeTextEditor;
+            if (!activeEditor) {
+                return;
+            }
+            // when open another file, does not highlight
+            if (fileName !== activeEditor.document.fileName){
+                return;
+            }
             highlightRange({
                 startIndex: currentNode.range[0],
                 endIndex: currentNode.range[1]
