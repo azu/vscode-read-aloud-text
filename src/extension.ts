@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
 import { SpeechEngine, SpeechEnginePosition } from './SpeechEngine';
 const getVoice = (): string =>
-    vscode.workspace.getConfiguration('speech').get<string>('voice');
+    vscode.workspace.getConfiguration('read-aloud-text').get<string>('voice');
 
 const getSpeed = (): number =>
-    vscode.workspace.getConfiguration('speech').get<number>('speed');
+    vscode.workspace.getConfiguration('read-aloud-text').get<number>('speed');
 
 let highlightDecorator: vscode.TextEditorDecorationType | null = null;
 function highlightRange({
