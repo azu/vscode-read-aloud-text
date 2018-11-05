@@ -23,7 +23,7 @@ It can either read the entire current document, or just the currently selected t
     - In other words, skip unreasonbale Node like `CodeBlock`
     - This extension only support `.txt`, Markdown to use a Parser
 - Highlight text that is read currently
-
+;
 ## Configuration
 By default, VSCode Speech uses whatever voice settings you have configured for your operating system. You can change the voice used to read text by [using some VSCode settings](https://code.visualstudio.com/docs/customization/userandworkspace)
 
@@ -135,6 +135,21 @@ Speed multiplier for the voice. Defaults to the operating system's default rate.
 
 `1` reads at the standard rate, `2` reads back twice as fast as normal, and `0.5` reads back half as fast as normal. 
 
+## Development
+
+Install with npm
+
+    npm install
+
+Debug
+
+    npm run compile
+    vscode .
+    # Lunch Extension on Debug Tag => Open new VSCode
+
+Publish
+
+- [Publishing Visual Studio Code Extensions](https://code.visualstudio.com/docs/extensions/publish-extension#_get-a-personal-access-token)
 
 ## Credits
 
