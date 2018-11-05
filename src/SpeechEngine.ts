@@ -122,6 +122,7 @@ export class SpeechEngine extends EventEmitter {
 
     onChange(handler: (currentSpeechNode: TxtNode) => void) {
         this.on("CHANGE", (index: number) => {
+            console.log("change", index);
             handler(this.txtNodes[index]);
         });
     }
@@ -135,7 +136,9 @@ export class SpeechEngine extends EventEmitter {
                 return speakText(text, voice, speed).then(() => {
                     // update index after finishing speech
                     this.speechIndex++;
-                });
+                }).catch(error => {
+                    this.speechIndex++;
+                })
             });
         });
     }
