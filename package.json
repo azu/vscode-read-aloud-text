@@ -91,10 +91,19 @@
     "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "devDependencies": {
+    "@types/node": "^10.12.2",
     "typescript": "^2.9.2",
     "vscode": "^1.1.18"
   },
   "dependencies": {
-    "say": "^0.14.0"
+    "@textlint/ast-node-types": "^4.0.3",
+    "@textlint/ast-traverse": "^2.0.9",
+    "@textlint/kernel": "^3.0.0",
+    "@textlint/textlint-plugin-markdown": "^5.0.1",
+    "@types/p-queue": "^2.3.1",
+    "p-queue": "^3.0.0",
+    "say": "^0.14.0",
+    "sentence-splitter": "^3.0.11",
+    "textlint-util-to-string": "^2.1.1"
   }
 }
