@@ -92,7 +92,7 @@
   },
   "devDependencies": {
     "@types/node": "^10.12.2",
-    "typescript": "^2.9.2",
+    "typescript": "^3.1.6",
     "vscode": "^1.1.18"
   },
   "dependencies": {
@@ -101,9 +101,11 @@
     "@textlint/kernel": "^3.0.0",
     "@textlint/textlint-plugin-markdown": "^5.0.1",
     "@types/p-queue": "^2.3.1",
+    "@types/structured-source": "^3.0.0",
     "p-queue": "^3.0.0",
-    "say": "^0.14.0",
+    "say": "^0.15.0",
     "sentence-splitter": "^3.0.11",
+    "structured-source": "^3.0.2",
     "textlint-util-to-string": "^2.1.1"
   }
 }

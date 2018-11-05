@@ -125,5 +125,6 @@ Speed multiplier for the voice. Defaults to the operating system's default rate.
 
 
 ## Credits
-Text-to-speech integration provided by [say.js](https://github.com/Marak/say.js/)
 
+- Text-to-speech integration provided by [say.js](https://github.com/Marak/say.js/)
+- This extension is based on [mattbierner/vscode-speech](https://github.com/mattbierner/vscode-speech)
