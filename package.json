@@ -29,6 +29,7 @@
   },
   "activationEvents": [
     "onCommand:read-aloud-text.speakDocument",
+    "onCommand:read-aloud-text.speakHere",
     "onCommand:read-aloud-text.speakSelection",
     "onCommand:read-aloud-text.stopSpeaking"
   ],
@@ -60,6 +61,11 @@
         "when": "editorTextFocus"
       },
       {
+        "command": "read-aloud-text.speakHere",
+        "title": "Speak Here",
+        "when": "editorTextFocus"
+      },
+      {
         "command": "read-aloud-text.speakSelection",
         "title": "Speak Selection",
         "when": "editorTextFocus && editorHasSelection"
@@ -73,6 +79,11 @@
       "editor/context": [
         {
           "command": "read-aloud-text.speakDocument",
+          "when": "!editorHasSelection",
+          "group": "8_read-aloud-text"
+        },
+        {
+          "command": "read-aloud-text.speakHere",
           "when": "!editorHasSelection",
           "group": "8_read-aloud-text"
         },

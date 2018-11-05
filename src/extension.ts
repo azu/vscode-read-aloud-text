@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { SpeechEngine, SpeechEnginePosition } from "./SpeechEngine";
+import { Disposer } from "bluebird";
 const getVoice = (): string => vscode.workspace.getConfiguration("read-aloud-text").get<string>("voice");
 
 const getSpeed = (): number => vscode.workspace.getConfiguration("read-aloud-text").get<number>("speed");
@@ -39,16 +40,19 @@ function highlightRange({ startIndex, endIndex }: { startIndex: number; endIndex
 }
 
 let currentEngine: SpeechEngine | null = null;
+let disposeFns: vscode.Disposable[] = [];
 const speech = {
     start(
         text: string,
         fileName: string,
         loc?: {
             start: SpeechEnginePosition;
-            end: SpeechEnginePosition;
+            end?: SpeechEnginePosition;
         }
     ) {
-        this.stop();
+        if (currentEngine && currentEngine.status === "play") {
+            this.stop();
+        }
         currentEngine = new SpeechEngine(text, fileName, loc);
         currentEngine.onChange(currentNode => {
             console.log("curretNode", currentNode);
@@ -57,9 +61,15 @@ const speech = {
                 return;
             }
             // when open another file, does not highlight
-            if (fileName !== activeEditor.document.fileName){
+            if (fileName !== activeEditor.document.fileName) {
                 return;
             }
+            disposeFns.push(vscode.workspace.onDidChangeTextDocument((event) => {
+                const changedFileName = event.document.fileName;
+                if (fileName === changedFileName) {
+                    this.stop();
+                }
+            }));
             highlightRange({
                 startIndex: currentNode.range[0],
                 endIndex: currentNode.range[1]
@@ -74,6 +84,10 @@ const speech = {
         if (highlightDecorator) {
             highlightDecorator.dispose();
         }
+        disposeFns.forEach((disposable) => {
+            disposable.dispose();
+        });
+        disposeFns = [];
     }
 };
 const speakCurrentSelection = (editor: vscode.TextEditor) => {
@@ -98,13 +112,31 @@ const speakDocument = (editor: vscode.TextEditor) => {
     speech.start(editor.document.getText(), editor.document.fileName);
 };
 
+const speakHere = (editor: vscode.TextEditor) => {
+    const active = editor.selection.active;
+    speech.start(editor.document.getText(), editor.document.fileName, {
+        start: {
+            line: active.line + 1,
+            column: active.character
+        }
+    });
+};
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerTextEditorCommand("read-aloud-text.speakDocument", editor => {
             console.log("read-aloud-text.speakDocument");
             speech.stop();
             if (!editor) return;
+            // Play or Resume
             speakDocument(editor);
+        })
+    );
+    context.subscriptions.push(
+        vscode.commands.registerTextEditorCommand("read-aloud-text.speakHere", editor => {
+            console.log("read-aloud-text.speakHere");
+            speech.stop();
+            if (!editor) return;
+            speakHere(editor);
         })
     );
     context.subscriptions.push(

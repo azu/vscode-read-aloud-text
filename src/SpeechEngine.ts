@@ -18,12 +18,13 @@ export class SpeechEngine extends EventEmitter {
     private txtNodes: TxtNode[];
     private speechIndex: number;
     private promiseQueue: PQueue<PQueue.DefaultAddOptions>;
+    public status: "pause" | "play" | "stop" = "stop";
     constructor(
         private text: string,
         filePath: string,
         loc?: {
             start: SpeechEnginePosition;
-            end: SpeechEnginePosition;
+            end?: SpeechEnginePosition;
         }
     ) {
         super();
@@ -32,7 +33,11 @@ export class SpeechEngine extends EventEmitter {
             return structuredSource.positionToIndex(position);
         };
         const startIndex = loc ? positionToIndex(loc.start) : null;
-        const endIndex = loc ? positionToIndex(loc.end) : null;
+        const endIndex = loc
+            ? loc.end
+                ? positionToIndex(loc.end)
+                : Infinity
+            : null;
         const parser = createParser([
             {
                 pluginId: "text",
@@ -131,6 +136,7 @@ export class SpeechEngine extends EventEmitter {
     }
 
     start(voice: string, speed: number) {
+        this.status = "play";
         this.txtNodes.slice(this.speechIndex).forEach((node: TxtNode | TxtParentNode, index) => {
             // StringSource can handle ParentNode
             const text: string = node.children ? new StringSource(node).toString() : node.raw;
@@ -149,13 +155,17 @@ export class SpeechEngine extends EventEmitter {
     }
 
     pause() {
+        this.status = "pause";
         this.promiseQueue.clear();
         this.removeAllListeners();
-        return stopSpeaking();
+        stopSpeaking();
     }
 
     reset() {
-        this.pause();
+        this.status = "stop";
+        this.promiseQueue.clear();
+        this.removeAllListeners();
+        stopSpeaking();
         this.speechIndex = 0;
     }
 }
