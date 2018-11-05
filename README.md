@@ -1,4 +1,4 @@
-# VSCode Read aloud text
+# VSCode Read Aloud text
 
 Simple text-to-speech extension for [Visual Studio Code](https://code.visualstudio.com).
 
