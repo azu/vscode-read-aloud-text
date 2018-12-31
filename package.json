@@ -119,7 +119,7 @@
     "@textlint/kernel": "^3.0.0",
     "@textlint/textlint-plugin-markdown": "^5.0.1",
     "@textlint/textlint-plugin-text": "^4.0.1",
-    "@types/p-queue": "^2.3.1",
+    "@types/p-queue": "^3.0.0",
     "@types/structured-source": "^3.0.0",
     "p-queue": "^3.0.0",
     "say": "^0.15.0",
