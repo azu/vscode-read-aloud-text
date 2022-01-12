@@ -18,7 +18,7 @@
     "theme": "light"
   },
   "engines": {
-    "vscode": "^1.5.0"
+    "vscode": "^1.63.1"
   },
   "categories": [
     "Other"
@@ -102,16 +102,15 @@
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
     "compile": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\""
   },
   "devDependencies": {
     "@types/node": "^10.12.2",
+    "@types/vscode": "^1.63.1",
     "husky": "^1.1.3",
     "lint-staged": "^8.0.4",
     "prettier": "^1.14.3",
-    "typescript": "^3.1.6",
-    "vscode": "^1.1.18"
+    "typescript": "^3.1.6"
   },
   "dependencies": {
     "@textlint/ast-node-types": "^4.0.3",
@@ -119,10 +118,9 @@
     "@textlint/kernel": "^3.0.0",
     "@textlint/textlint-plugin-markdown": "^5.0.1",
     "@textlint/textlint-plugin-text": "^4.0.1",
-    "@types/p-queue": "^3.0.0",
     "@types/structured-source": "^3.0.0",
-    "p-queue": "^3.0.0",
-    "say": "^0.15.0",
+    "p-queue": "^6.6.2",
+    "say": "MatchaChoco010/say.js#make-3rd-party-voice-available",
     "sentence-splitter": "^3.0.11",
     "structured-source": "^3.0.2",
     "textlint-plugin-review": "^0.3.3",
