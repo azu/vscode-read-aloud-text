@@ -4,20 +4,20 @@ import { createParser } from "./parser";
 import { traverse, VisitorOption } from "@textlint/ast-traverse";
 import { splitAST, Syntax as SentenceSyntax } from "sentence-splitter";
 const StringSource = require("textlint-util-to-string");
-import PQueue = require("p-queue");
+import PQueue from "p-queue";
 import { EventEmitter } from "events";
 
-import StructuredSource = require("structured-source");
+const StructuredSource = require("structured-source");
 /**
  *  Line number starts with 1.
  *  Column number starts with 0.
  */
 export type SpeechEnginePosition = { line: number; column: number };
 export class SpeechEngine extends EventEmitter {
-    private txtAST: TxtNode;
+    private txtAST: TxtNode | { text: string; ast: TxtNode };
     private txtNodes: TxtNode[];
     private speechIndex: number;
-    private promiseQueue: PQueue<PQueue.DefaultAddOptions>;
+    private promiseQueue: PQueue;
     public status: "pause" | "play" | "stop" = "stop";
     constructor(
         private text: string,
@@ -33,19 +33,15 @@ export class SpeechEngine extends EventEmitter {
             return structuredSource.positionToIndex(position);
         };
         const startIndex = loc ? positionToIndex(loc.start) : null;
-        const endIndex = loc
-            ? loc.end
-                ? positionToIndex(loc.end)
-                : Infinity
-            : null;
+        const endIndex = loc ? (loc.end ? positionToIndex(loc.end) : Infinity) : null;
         const parser = createParser([
             {
                 pluginId: "text",
-                plugin: require("@textlint/textlint-plugin-text")
+                plugin: require("@textlint/textlint-plugin-text").default
             },
             {
                 pluginId: "markdown",
-                plugin: require("@textlint/textlint-plugin-markdown")
+                plugin: require("@textlint/textlint-plugin-markdown").default
             },
             {
                 pluginId: "review",
@@ -94,7 +90,11 @@ export class SpeechEngine extends EventEmitter {
                 if (!isIncludedNode(node)) {
                     return;
                 }
-                if (node.type === ASTNodeTypes.Paragraph || node.type === ASTNodeTypes.Header || node.type === "TableCell") {
+                if (
+                    node.type === ASTNodeTypes.Paragraph ||
+                    node.type === ASTNodeTypes.Header ||
+                    node.type === "TableCell"
+                ) {
                     const parentNode = splitAST(node as TxtParentNode);
                     parentNode.children.forEach(node => {
                         if (!isIncludedNode(node)) {
@@ -135,6 +135,7 @@ export class SpeechEngine extends EventEmitter {
                         this.speechIndex++;
                     })
                     .catch(error => {
+                        console.log("oh");
                         this.speechIndex++;
                     });
             });

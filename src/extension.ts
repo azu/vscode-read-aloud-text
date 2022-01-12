@@ -1,9 +1,8 @@
 import * as vscode from "vscode";
 import { SpeechEngine, SpeechEnginePosition } from "./SpeechEngine";
-import { Disposer } from "bluebird";
-const getVoice = (): string => vscode.workspace.getConfiguration("read-aloud-text").get<string>("voice");
+const getVoice = (): string => vscode.workspace.getConfiguration("read-aloud-text").get<string>("voice") as string;
 
-const getSpeed = (): number => vscode.workspace.getConfiguration("read-aloud-text").get<number>("speed");
+const getSpeed = (): number => vscode.workspace.getConfiguration("read-aloud-text").get<number>("speed") as number;
 
 let highlightDecorator: vscode.TextEditorDecorationType | null = null;
 function highlightRange({ startIndex, endIndex }: { startIndex: number; endIndex: number }) {
@@ -64,18 +63,22 @@ const speech = {
             if (fileName !== activeEditor.document.fileName) {
                 return;
             }
-            disposeFns.push(vscode.workspace.onDidCloseTextDocument((event) => {
-                const changedFileName = event.fileName;
-                if (fileName === changedFileName) {
-                    this.stop();
-                }   
-            }));
-            disposeFns.push(vscode.workspace.onDidChangeTextDocument((event) => {
-                const changedFileName = event.document.fileName;
-                if (fileName === changedFileName) {
-                    this.stop();
-                }
-            }));
+            disposeFns.push(
+                vscode.workspace.onDidCloseTextDocument(event => {
+                    const changedFileName = event.fileName;
+                    if (fileName === changedFileName) {
+                        this.stop();
+                    }
+                })
+            );
+            disposeFns.push(
+                vscode.workspace.onDidChangeTextDocument(event => {
+                    const changedFileName = event.document.fileName;
+                    if (fileName === changedFileName) {
+                        this.stop();
+                    }
+                })
+            );
             highlightRange({
                 startIndex: currentNode.range[0],
                 endIndex: currentNode.range[1]
@@ -90,7 +93,7 @@ const speech = {
         if (highlightDecorator) {
             highlightDecorator.dispose();
         }
-        disposeFns.forEach((disposable) => {
+        disposeFns.forEach(disposable => {
             disposable.dispose();
         });
         disposeFns = [];
@@ -160,3 +163,6 @@ export function activate(context: vscode.ExtensionContext) {
         })
     );
 }
+
+function Hoge() {}
+console.log(Hoge);
